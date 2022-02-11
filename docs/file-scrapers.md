@@ -92,6 +92,15 @@ curl https://gcc.gnu.org/onlinedocs/gcc-$RELEASE/gfortran-html.tar.gz | \
 tar --extract --gzip --strip-components=1 --directory=docs/gnu_fortran~$VERSION
 ```
 
+## GNU Make
+Go to https://www.gnu.org/software/make/manual/, download the HTML tarball and extract its content in `/path/to/devdocs/docs/gnu_make` or run the following command:
+
+```sh
+mkdir /path/to/devdocs/docs/gnu_make \
+&& curl https://www.gnu.org/software/make/manual/make.html_node.tar.gz | \
+tar --extract --gzip --strip-components=1 --directory=/path/to/devdocs/docs/gnu_make
+```
+
 ## Gnuplot
 
 The most recent release can be found near the bottom of
@@ -166,10 +175,7 @@ mv ./usr/share/doc/openjdk-16-jre-headless/api/ path/to/devdocs/docs/openjdk~$VE
 ## Pandas
 
 ```sh
-mkdir docs/pandas~1
-cd docs/pandas~1
-curl https://pandas.pydata.org/docs/pandas.zip
-bsdtar xf pandas.zip
+curl https://pandas.pydata.org/docs/pandas.zip | bsdtar --extract --file - --directory=docs/pandas~1
 ```
 
 ## PHP
@@ -226,6 +232,13 @@ done
 ### Nokogiri
 ### Ruby / Minitest
 ### Ruby on Rails
+* Download a release at https://github.com/rails/rails/releases or clone https://github.com/rails/rails.git (checkout to the branch of the rails' version that is going to be scraped)
+* Open "railties/lib/rails/api/task.rb" and comment out any code related to sdoc ("configure_sdoc")
+* Run "bundle install --without db && bundle exec rake rdoc" (in the Rails directory)
+* Run "cd guides && bundle exec rake guides:generate:html"
+* Copy the "guides/output" directory to "html/guides"
+* Copy the "html" directory to "docs/rails~[version]"
+
 ### Ruby
 Download the tarball of Ruby from https://www.ruby-lang.org/en/downloads/, extract it, run
 `./configure && make html` in your terminal (while your are in the ruby directory) and move
@@ -250,5 +263,5 @@ Download the docs from https://sqlite.org/download.html, unzip it, and rename
 it to `/path/to/devdocs/docs/sqlite`
 
 ```sh
-curl https://sqlite.org/2021/sqlite-doc-3370000.zip | bsdtar --extract --file - --directory=docs/sqlite/```
+curl https://sqlite.org/2021/sqlite-doc-3370000.zip | bsdtar --extract --file - --directory=docs/sqlite/
 ```
