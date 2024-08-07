@@ -15,10 +15,26 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    self.release = '2.9.1'
-    self.base_url = 'https://vitejs.dev/'
+    options[:skip] = %w(team.html team)
+    options[:skip_patterns] = [/\Ablog/, /\Aplugins/]
+
     self.initial_paths = %w(guide/)
     html_filters.push 'vite/entries', 'vite/clean_html'
+
+    version do
+      self.release = '5.2.13'
+      self.base_url = 'https://vitejs.dev/'
+    end
+
+    version '4' do
+      self.release = '4.5.1'
+      self.base_url = 'https://v4.vitejs.dev/'
+    end
+
+    version '3' do
+      self.release = '3.2.5'
+      self.base_url = 'https://v3.vitejs.dev/'
+    end
 
     def get_latest_version(opts)
       get_npm_version('vite', opts)
